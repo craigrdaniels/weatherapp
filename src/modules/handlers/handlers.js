@@ -1,8 +1,11 @@
+import displayWeatherCard from '../../views/weather';
+
 const getElement = (selector, parentNode = document) =>
   parentNode.querySelector(selector);
 
 const loadViews = (selector) => {
   const mainContent = getElement(selector);
-  console.warn(mainContent);
+
+  mainContent.appendChild(displayWeatherCard());
 };
 export default loadViews;

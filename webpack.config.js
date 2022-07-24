@@ -18,7 +18,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'ToDo',
       templateContent: `
-      <html>
+      <html class="dark">
       <head><title>WeatherApp</title>
       <meta name="viewport" content="width=device-width, initial-scale=1"></head>
       <body>
@@ -45,6 +45,12 @@ module.exports = {
         test: /\.css$/i,
         exclude: /node_modules/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+      },
+      {
+        test: /\.svg$/i,
+        exclude: /node_modules/,
+        use: [ { loader: 'svg-sprite-loader',
+        options: {} } ]
       },
     ],
   },
