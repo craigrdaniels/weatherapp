@@ -43,6 +43,31 @@ const getWeather = async (coords) => {
       .parentElement.classList.remove(['animate-pulse']);
     document.getElementById('weatherIcon').classList.remove('bg-gray-300');
 
+    // Temp min
+    const tempminElement = document.getElementById('tempmin');
+    let tempminData = Math.round(theWeather.daily[0].temp.min * 10) / 10;
+    tempminData += '&deg;';
+    tempminElement.appendChild(
+      createHtmlElement('span', null, ['text-sm', 'text-gray-400'], 'Min')
+    );
+    tempminElement.appendChild(
+      createHtmlElement('span', null, [], tempminData)
+    );
+    tempminElement.classList.remove('bg-gray-300');
+
+    // Temp max
+    const tempmaxElement = document.getElementById('tempmax');
+    let tempmaxData = Math.round(theWeather.daily[0].temp.max * 10) / 10;
+    tempmaxData += '&deg;';
+    tempmaxElement.appendChild(
+      createHtmlElement('span', null, ['text-sm', 'text-gray-400'], 'Max')
+    );
+    tempmaxElement.appendChild(
+      createHtmlElement('span', null, [], tempmaxData)
+    );
+    tempmaxElement.classList.remove('bg-gray-300');   
+
+
     // Humidity
     const humidityElement = document.getElementById('humidity');
     let humidityData = theWeather.current.humidity;
@@ -55,43 +80,55 @@ const getWeather = async (coords) => {
     );
     humidityElement.classList.remove('bg-gray-300');
 
-    // Pressure
-    const pressureElement = document.getElementById('pressure');
-    const pressureData = theWeather.current.pressure;
-    pressureElement.appendChild(
-      createHtmlElement('span', null, ['text-sm', 'text-gray-400'], 'Pressure')
+    // Daily POP
+    const dailpopElement = document.getElementById('dailypop');
+    let dailpopData = Math.round(theWeather.daily[0].pop * 10) / 10;
+    dailpopData += '%';
+    dailpopElement.appendChild(
+      createHtmlElement('span', null, ['text-sm', 'text-gray-400'], 'Precip.')
     );
-    pressureElement.appendChild(
-      createHtmlElement('span', null, [], pressureData)
+    dailpopElement.appendChild(
+      createHtmlElement('span', null, [], dailpopData)
     );
-    pressureElement.classList.remove('bg-gray-300');
+    dailpopElement.classList.remove('bg-gray-300'); 
 
-    // Wind Speed
-    const windspeedElement = document.getElementById('windspeed');
-    const windSpeedData = Math.round(theWeather.current.wind_speed * 10) / 10;
-    windspeedElement.appendChild(
-      createHtmlElement(
-        'span',
-        null,
-        ['text-sm', 'text-gray-600', 'dark:text-gray-400'],
-        'Wind Spd'
-      )
-    );
-    windspeedElement.appendChild(
-      createHtmlElement('span', null, [], windSpeedData)
-    );
-    windspeedElement.classList.remove('bg-gray-300');
+    // // Pressure
+    // const pressureElement = document.getElementById('pressure');
+    // const pressureData = theWeather.current.pressure;
+    // pressureElement.appendChild(
+    //   createHtmlElement('span', null, ['text-sm', 'text-gray-400'], 'Pressure')
+    // );
+    // pressureElement.appendChild(
+    //   createHtmlElement('span', null, [], pressureData)
+    // );
+    // pressureElement.classList.remove('bg-gray-300');
 
-    // Wind Dir
-    const winddirElement = document.getElementById('winddir');
-    const windDirData = theWeather.current.wind_deg;
-    winddirElement.appendChild(
-      createHtmlElement('span', null, ['text-sm', 'text-gray-400'], 'Wind Dir')
-    );
-    winddirElement.appendChild(
-      createHtmlElement('span', null, [], windDirData)
-    );
-    winddirElement.classList.remove('bg-gray-300');
+    // // Wind Speed
+    // const windspeedElement = document.getElementById('windspeed');
+    // const windSpeedData = Math.round(theWeather.current.wind_speed * 10) / 10;
+    // windspeedElement.appendChild(
+    //   createHtmlElement(
+    //     'span',
+    //     null,
+    //     ['text-sm', 'text-gray-600', 'dark:text-gray-400'],
+    //     'Wind Spd'
+    //   )
+    // );
+    // windspeedElement.appendChild(
+    //   createHtmlElement('span', null, [], windSpeedData)
+    // );
+    // windspeedElement.classList.remove('bg-gray-300');
+
+    // // Wind Dir
+    // const winddirElement = document.getElementById('winddir');
+    // const windDirData = theWeather.current.wind_deg;
+    // winddirElement.appendChild(
+    //   createHtmlElement('span', null, ['text-sm', 'text-gray-400'], 'Wind Dir')
+    // );
+    // winddirElement.appendChild(
+    //   createHtmlElement('span', null, [], windDirData)
+    // );
+    // winddirElement.classList.remove('bg-gray-300');
 
     // Current Temperature
     const currentTemp = document.getElementById('currentTemperature');
@@ -185,10 +222,10 @@ const displayDetails = () => {
     null
   );
 
+  element.appendChild(createDetailsChild('tempmin'));
+  element.appendChild(createDetailsChild('tempmax'));
+  element.appendChild(createDetailsChild('dailypop'));
   element.appendChild(createDetailsChild('humidity'));
-  element.appendChild(createDetailsChild('pressure'));
-  element.appendChild(createDetailsChild('windspeed'));
-  element.appendChild(createDetailsChild('winddir'));
 
   return element;
 };
