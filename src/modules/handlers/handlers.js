@@ -19,6 +19,14 @@ const handleSearch = (selector) => {
 }; 
 
 const loadViews = (selector) => {
+
+  // set light / theme based on media preference
+  if (window.matchMedia('(prefers-color-scheme: dark)')) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+  
   const mainContent = getElement(selector);
 
   mainContent.appendChild(displayWeatherCard("Brisbane"));

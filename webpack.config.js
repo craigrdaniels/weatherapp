@@ -18,7 +18,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'ToDo',
       templateContent: `
-      <html class="dark">
+      <html>
       <head><title>WeatherApp</title>
       <meta name="viewport" content="width=device-width, initial-scale=1"></head>
       <body>
@@ -49,8 +49,7 @@ module.exports = {
       {
         test: /\.svg$/i,
         exclude: /node_modules/,
-        use: [ { loader: 'svg-sprite-loader',
-        options: {} } ]
+        use: [{ loader: 'svg-sprite-loader', options: {} }],
       },
     ],
   },

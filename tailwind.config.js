@@ -3,8 +3,7 @@ module.exports = {
   content: ['./dist/*.{html,js}', './src/**/*.{html,js}'],
   darkMode: 'class',
   theme: {
-    extend: {
-    },
+    extend: {},
   },
   variants: {
     extend: {},
