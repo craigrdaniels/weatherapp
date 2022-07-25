@@ -7,13 +7,31 @@ import getIcon from "../modules/handlers/loadIcon";
 
 const url = 'https://api.openweathermap.org/data/3.0/onecall?units=metric&exclude=minutely,hourly&appid=90318285a062f251bf658d4369021fd6';
 
-const geoCode = 'http://api.openweathermap.org/geo/1.0/direct?appid=90318285a062f251bf658d4369021fd6';
+const geoCode = 'http://api.openweathermap.org/geo/1.0/direct?appid=90318285a062f251bf658d4369021fd6&q=';
 
 
-const getWeather = async (fetchurl) => {
+const createSearchBar = () => `
+    <form id='form' action="#" onsubmit="return false"> 
+    <input id="search" type="input" class="hidden w-full h-full bg-gray-50 dark:bg-gray-700 rounded-md text-2xl placeholder:font-['MaterialSymbols-Outlined']" placeholder="search"/>
+    <input type="submit" hidden />
+    </form>
+  `;
+
+
+const getWeather = async (coords) => {
+
+  const fetchurl = url + coords;
+
   try {
     const response = await fetch(fetchurl, { mode: 'cors' });
     const theWeather = await response.json();
+
+    // Search Bar
+    const searchBarElement = document.getElementById('searchBar');
+    document.getElementById('search').classList.remove('hidden');
+    // searchBarElement.innerHTML = createSearchBar();
+    searchBarElement.classList.remove('bg-gray-300');
+    
 
     // Weather Icon
     const weatherIcon = document.getElementById('weatherIcon');
@@ -62,26 +80,31 @@ const getWeather = async (fetchurl) => {
     currentTemp.classList.remove('bg-gray-300');
 
   } catch (error) {
-    console.error("Unable to fetch data");
+    console.error(`Unable to fetch weather data for ${ fetchurl}`);
   }
 };
 
-const getCity = async (fetchurl) => {
+const getCity = async (city) => {
+  const fetchurl = geoCode + city;
+  let string = "";
   try {
     const response = await fetch(fetchurl, { mode: 'cors' });
     const coords = await response.json();
 
-    const string = `&lat=${  coords[0].lat  }&lon=${  coords[0].lon}`;
+    string = `&lat=${  coords[0].lat  }&lon=${  coords[0].lon}`;
 
     // City Name
     const cityElement = document.getElementById('cityName');
     cityElement.innerHTML = coords[0].name;
     cityElement.classList.remove('bg-gray-300');
 
-    getWeather(url + string);
+
+
+    // getWeather(url + string);
   } catch (error) {
-    console.error("Unable to fetch city data");
+    console.error(`Unable to fetch city data for ${ fetchurl}`);
   }
+  return string;
 }
 
 
@@ -113,7 +136,9 @@ const displayDetails = () => {
 
 
 const displaySearchBar = () => {
-  const element = createHtmlElement('div', 'searchBar', ['flex', 'justify-center', 'items-center', 'self-center', 'w-72', 'h-12', 'rounded-md', 'bg-gray-300'], '&nbsp;');
+  const element = createHtmlElement('div', 'searchBar', ['flex', 'justify-center', 'items-center', 'self-center', 'w-72', 'h-12', 'rounded-md', 'bg-gray-300'], null);
+
+  element.innerHTML = createSearchBar();
 
   return element;
 };
@@ -138,7 +163,9 @@ const displayWeatherIcon = () => {
 };
 
 
-const displayWeatherCard = () => {  
+const displayWeatherCard = (searchCity) => {  
+
+  console.warn(searchCity);
 
   const element = createHtmlElement('div', null, ['animate-pulse', 'flex', 'flex-col', 'p-4', 'pt-8', 'max-w-sm', 'w-full', 'mx-auto', 'gap-4'], null);
 
@@ -149,8 +176,8 @@ const displayWeatherCard = () => {
   element.appendChild(displayDetails());
   element.appendChild(displaySunriseSunset());
 
-  getCity(`${geoCode }&q=Brisbane`);
-
+  getCity(searchCity).then(getWeather);
+  
   return element;
 };
 export default displayWeatherCard;
