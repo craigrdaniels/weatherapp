@@ -1,4 +1,4 @@
-import displayWeatherCard from '../../views/weather';
+import displayWeatherCard from '../../views/weatherCard';
 
 const getElement = (selector, parentNode = document) =>
   parentNode.querySelector(selector);  
