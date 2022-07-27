@@ -135,7 +135,6 @@ export const getWeather = async (coords) => {
 
   } catch (error) {
     console.error(`Unable to fetch weather data for ${fetchurl}`);
-    return null;
   }
 };
 
