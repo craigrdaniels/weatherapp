@@ -1,6 +1,8 @@
 import getIcon from './loadIcon';
 import createHtmlElement from './createHtmlElement';
 
+const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 const url =
   'https://api.openweathermap.org/data/3.0/onecall?units=metric&exclude=minutely,hourly&appid=90318285a062f251bf658d4369021fd6';
 
@@ -86,6 +88,31 @@ const loadCurrentTemp = (data) => {
   currentTemp.classList.remove('bg-gray-300');
 };
 
+const loadForecastData = (data, index) => {
+  const d = new Date().getDay();
+  const container = document.getElementById(`forecast${index}`);
+
+  let tempMax = Math.round(data.daily[index+1].temp.max);
+  tempMax += '&deg;';
+
+  let tempMin = Math.round(data.daily[index+1].temp.min);
+  tempMin += '&deg;';
+
+  const renderedIcon = `
+  <svg viewBox="${getIcon(data.daily[index+1].weather[0].icon).viewBox}">
+    <use href="#${getIcon(data.daily[index+1].weather[0].icon).id}" />
+  </svg>`;
+
+
+  container.appendChild(createHtmlElement('span', null, ['text-sm', 'text-gray-400'], days[(d+index+1) % 7]));
+  container.appendChild(createHtmlElement('span', null, ['text-base'], tempMax))
+  container.appendChild(createHtmlElement('div', null, ['w-8', 'h-8'], renderedIcon));
+  container.appendChild(createHtmlElement('span', null, ['text-base'], tempMin));
+
+
+  container.classList.remove('bg-gray-300');
+}
+
 
 export const getWeather = async (coords) => {
   const fetchurl = url + coords;
@@ -102,8 +129,13 @@ export const getWeather = async (coords) => {
     loadDailyPop(theWeather);
     loadCurrentTemp(theWeather);
 
+    for (let i = 0; i < 4; i+=1) {
+      loadForecastData(theWeather, i);
+    }
+
   } catch (error) {
     console.error(`Unable to fetch weather data for ${fetchurl}`);
+    return null;
   }
 };
 
