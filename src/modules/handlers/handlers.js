@@ -19,7 +19,7 @@ const handleSearch = (selector) => {
 const loadViews = (selector) => {
 
   // set light / theme based on media preference
-  if (window.matchMedia('(prefers-color-scheme: dark)')) {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.documentElement.classList.add('dark');
   } else {
     document.documentElement.classList.remove('dark');

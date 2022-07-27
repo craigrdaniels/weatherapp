@@ -4,27 +4,54 @@ import { getCity, getWeather } from '../modules/handlers/displayWeatherData';
 
 const createSearchBar = () => `
     <form id='form' action="#" onsubmit="return false"> 
-    <input id="search" type="input" class="hidden w-full h-12 bg-gray-50 dark:bg-gray-700 rounded-md text-2xl pl-2 placeholder:font-['MaterialSymbols-Outlined']" placeholder="search"/>
+    <input id="search" type="input" class="hidden w-full h-12 bg-gray-100 dark:bg-gray-700 rounded-md text-2xl pl-2 placeholder:font-['MaterialSymbols-Outlined']" placeholder="search"/>
     <input type="submit" hidden />
     </form>
   `;
 
-const displaySunriseSunset = () => {
+
+const createForecastChild = (id) => {
   const element = createHtmlElement(
     'div',
-    'sunriseSunset',
+    id,
+    [
+      'flex',
+      'flex-col',
+      'justify-evenly',
+      'items-center',
+      'text-2xl',
+      'w-1/4',
+      'h-full',
+      'rounded-md',
+      'bg-gray-300',
+    ],
+    null
+  );
+  return element;
+};
+
+const displayForecastContainer = () => {
+  const element = createHtmlElement(
+    'div',
+    'forecastContainer',
     [
       'flex',
       'justify-center',
       'items-center',
       'self-center',
+      'gap-2',
       'w-80',
       'h-48',
       'rounded-md',
-      'bg-gray-300',
+      'bg-gray-100',
+      'dark:bg-gray-700',
     ],
-    '&nbsp;'
+    null
   );
+
+  for (let i = 0; i < 4; i+=1) {
+    element.appendChild(createForecastChild(`forecast${i}`));
+  }
 
   return element;
 };
@@ -156,7 +183,7 @@ const displayWeatherIcon = () => {
       'rounded-md',
       'bg-gray-300',
     ],
-    '&nbsp;'
+    null
   );
 
   return element;
@@ -185,7 +212,7 @@ const displayWeatherCard = (searchCity) => {
   element.appendChild(displayCityName());
   element.appendChild(displayCurrentTemperature());
   element.appendChild(displayDetails());
-  element.appendChild(displaySunriseSunset());
+  element.appendChild(displayForecastContainer());
 
   getCity(searchCity).then(getWeather);
 
