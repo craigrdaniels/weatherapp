@@ -46,6 +46,7 @@
     "webpack-dev-server": "^4.9.3"
   },
   "devDependencies": {
+    "dotenv-webpack": "^8.0.0",
     "svg-sprite-loader": "^6.0.11"
   }
 }

@@ -2,12 +2,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const DotenvWebpackPlugin = require('dotenv-webpack');
 
 const env = process.env.NODE_ENV || 'development';
 const isDev = env === 'development';
 const isProd = env === 'production';
 
 module.exports = {
+  target: 'web',
   mode: 'development',
   entry: {
     index: './src/index.js',
@@ -28,6 +30,7 @@ module.exports = {
       `,
     }),
     new MiniCssExtractPlugin(),
+    new DotenvWebpackPlugin()
   ],
   output: {
     filename: '[name].bundle.js',

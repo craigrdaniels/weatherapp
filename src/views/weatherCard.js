@@ -214,7 +214,7 @@ const displayWeatherCard = (searchCity) => {
   element.appendChild(displayDetails());
   element.appendChild(displayForecastContainer());
 
-  getCity(searchCity).then(getWeather);
+  getCity(searchCity).then(getWeather);  
 
   return element;
 };

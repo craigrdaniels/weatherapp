@@ -4,10 +4,10 @@ import createHtmlElement from './createHtmlElement';
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const url =
-  'https://api.openweathermap.org/data/3.0/onecall?units=metric&exclude=minutely,hourly&appid=90318285a062f251bf658d4369021fd6';
+  `https://api.openweathermap.org/data/3.0/onecall?units=metric&exclude=minutely,hourly&appid=${process.env.API_KEY}`;
 
 const geoCode =
-  'http://api.openweathermap.org/geo/1.0/direct?appid=90318285a062f251bf658d4369021fd6&q=';
+  `http://api.openweathermap.org/geo/1.0/direct?appid=${process.env.API_KEY}&q=`;
 
 
 const loadSearchBar = () => {
