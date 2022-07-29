@@ -7,7 +7,7 @@ const url =
   `https://api.openweathermap.org/data/3.0/onecall?units=metric&exclude=minutely,hourly&appid=${process.env.API_KEY}`;
 
 const geoCode =
-  `http://api.openweathermap.org/geo/1.0/direct?appid=${process.env.API_KEY}&q=`;
+  `https://api.openweathermap.org/geo/1.0/direct?appid=${process.env.API_KEY}&q=`;
 
 
 const loadSearchBar = () => {
