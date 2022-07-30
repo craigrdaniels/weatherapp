@@ -25,7 +25,7 @@ const loadWeatherIcon = (data) => {
   weatherIcon.innerHTML = rendered;
   document
     .getElementById('weatherIcon')
-    .parentElement.classList.remove(['animate-pulse']);
+    .parentElement.parentElement.parentElement.classList.remove(['animate-pulse']);
   document.getElementById('weatherIcon').classList.remove('bg-gray-300');
 };
 

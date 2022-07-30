@@ -9,7 +9,6 @@ const createSearchBar = () => `
     </form>
   `;
 
-
 const createForecastChild = (id) => {
   const element = createHtmlElement(
     'div',
@@ -66,6 +65,7 @@ const createDetailsChild = (id) => {
       'justify-evenly',
       'items-center',
       'text-2xl',
+      'md:text-3xl',
       'w-1/4',
       'h-full',
       'rounded-md',
@@ -90,6 +90,7 @@ const displayDetails = () => {
       'gap-2',
       'w-80',
       'h-20',
+      'md:h-28',
       'rounded-md',
     ],
     null
@@ -99,6 +100,44 @@ const displayDetails = () => {
   element.appendChild(createDetailsChild('tempmax'));
   element.appendChild(createDetailsChild('dailypop'));
   element.appendChild(createDetailsChild('humidity'));
+
+  return element;
+};
+
+const displayDetailsContainer = () => {
+  const element = createHtmlElement(
+    'div',
+    null,
+    [
+      'flex',
+      'flex-col',
+      'place-content-center',
+      'w-full',
+      'gap-6'
+    ],
+    null
+  );
+
+  element.appendChild(displayDetails());
+  element.appendChild(displayForecastContainer());
+
+  return element;
+};
+
+const displayBreak = () => {
+  const element = createHtmlElement(
+    'div',
+    null,
+    [
+      'flex',
+      'hidden',
+      'md:block',
+      'md:w-px',
+      'bg-gray-300',
+      'self-stretch'
+    ],
+    null
+  );
 
   return element;
 };
@@ -124,6 +163,26 @@ const displaySearchBar = () => {
 
   return element;
 };
+
+const displaySearchContainer = () => {
+  const element = createHtmlElement(
+    'div',
+    null,
+    [
+      'flex',
+      'flex-col',
+      'justify-center',
+      'self-start',
+      'items-center',
+      'w-full'
+    ],
+    null
+  );
+
+  element.appendChild(displaySearchBar());
+
+  return element;
+}
 
 const displayCurrentTemperature = () => {
   const element = createHtmlElement(
@@ -189,6 +248,49 @@ const displayWeatherIcon = () => {
   return element;
 };
 
+const mainWeatherContainer = () => {
+  const element = createHtmlElement(
+    'div',
+    null,
+    [
+      'flex',
+      'flex-col',
+      'place-content-center',
+      'w-full',
+      'gap-6'
+    ],
+    null
+  );
+
+  element.appendChild(displayWeatherIcon());
+  element.appendChild(displayCityName());
+  element.appendChild(displayCurrentTemperature());
+  
+  return element;
+};
+
+const contentContainer = () => {
+  const element = createHtmlElement(
+    'div',
+    null,
+    [
+      'flex',
+      'flex-col',
+      'md:flex-row',
+      'place-content-center',
+      'w-full',
+      'gap-6'
+    ],
+    null
+  );
+
+  element.appendChild(mainWeatherContainer());
+  element.appendChild(displayBreak());
+  element.appendChild(displayDetailsContainer());
+
+  return element;
+}
+
 const displayWeatherCard = (searchCity) => {
   const element = createHtmlElement(
     'div',
@@ -199,20 +301,19 @@ const displayWeatherCard = (searchCity) => {
       'flex-col',
       'p-4',
       'pt-8',
-      'max-w-sm',
-      'w-full',
       'mx-auto',
-      'gap-4',
+      'gap-6',
+      'md:border',
+      'md:shadow-xl',
+      'md:rounded-lg',
+      'md:max-h-sm',
+      'self-center'
     ],
     null
   );
 
-  element.appendChild(displaySearchBar());
-  element.appendChild(displayWeatherIcon());
-  element.appendChild(displayCityName());
-  element.appendChild(displayCurrentTemperature());
-  element.appendChild(displayDetails());
-  element.appendChild(displayForecastContainer());
+  element.appendChild(displaySearchContainer());
+  element.appendChild(contentContainer());
 
   getCity(searchCity).then(getWeather);  
 
