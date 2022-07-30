@@ -234,8 +234,6 @@ const displayWeatherIcon = () => {
     'weatherIcon',
     [
       'flex',
-      'justify-center',
-      'items-center',
       'self-center',
       'w-36',
       'h-36',

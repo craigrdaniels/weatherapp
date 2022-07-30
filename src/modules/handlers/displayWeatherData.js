@@ -22,6 +22,7 @@ const loadWeatherIcon = (data) => {
     <svg viewBox="${getIcon(data.current.weather[0].icon).viewBox}">
       <use href="#${getIcon(data.current.weather[0].icon).id}" />
     </svg>`;
+  console.warn(getIcon(data.current.weather[0].icon));
   weatherIcon.innerHTML = rendered;
   document
     .getElementById('weatherIcon')
