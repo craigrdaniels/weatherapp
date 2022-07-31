@@ -22,7 +22,6 @@ const loadWeatherIcon = (data) => {
     <svg viewBox="${getIcon(data.current.weather[0].icon).viewBox}">
       <use href="#${getIcon(data.current.weather[0].icon).id}" />
     </svg>`;
-  console.warn(getIcon(data.current.weather[0].icon));
   weatherIcon.innerHTML = rendered;
   document
     .getElementById('weatherIcon')
@@ -143,23 +142,21 @@ export const getCity = async (city) => {
 
   const thecity = city.split('&')[0];
 
-
   const fetchurl = geoCode + thecity;
-  let string = '';
   try {
     const response = await fetch(fetchurl, { mode: 'cors' });
     const coords = await response.json();
-
-    string = `&lat=${coords[0].lat}&lon=${coords[0].lon}`;
 
     // City Name
     const cityElement = document.getElementById('cityName');
     cityElement.innerHTML = coords[0].name;
     cityElement.classList.remove('bg-gray-300');
 
+    return `&lat=${coords[0].lat}&lon=${coords[0].lon}`;
+
     // getWeather(url + string);
   } catch (error) {
     console.error(`Unable to fetch city data for ${fetchurl}`);
+    return false;
   }
-  return string;
 };

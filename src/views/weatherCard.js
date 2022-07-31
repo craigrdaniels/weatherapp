@@ -313,7 +313,11 @@ const displayWeatherCard = (searchCity) => {
   element.appendChild(displaySearchContainer());
   element.appendChild(contentContainer());
 
-  getCity(searchCity).then(getWeather);  
+  try {
+    getCity(searchCity).then(getWeather);  
+  } catch (e) {
+    console.error("Error fetching data");
+  }
 
   return element;
 };
